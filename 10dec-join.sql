@@ -76,6 +76,16 @@ ON
 
 select * from tableA natural join tableB;
 
+SELECT 
+    tableA.value1 AS value1_A,
+    tableB.value1 AS value1_B
+FROM 
+    tableA
+FULL OUTER JOIN 
+    tableB
+ON 
+    tableA.pk = tableB.pk;
+
 
 
 
