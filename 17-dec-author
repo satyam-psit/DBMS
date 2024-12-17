@@ -1,0 +1,150 @@
+CREATE TABLE author (
+    author_id NUMBER PRIMARY KEY,
+    name VARCHAR2(100),
+    birth_year NUMBER,
+    death_year NUMBER NULL
+);
+
+INSERT INTO author (author_id, name, birth_year, death_year)
+VALUES (1, 'William Shakespeare', 1564, 1616);
+
+INSERT INTO author (author_id, name, birth_year, death_year)
+VALUES (2, 'Charles Dickens', 1812, 1870);
+
+INSERT INTO author (author_id, name, birth_year, death_year)
+VALUES (3, 'Jane Austen', 1775, 1817);
+
+INSERT INTO author (author_id, name, birth_year, death_year)
+VALUES (4, 'Mark Twain', 1835, 1910);
+
+INSERT INTO author (author_id, name, birth_year, death_year)
+VALUES (5, 'Haruki Murakami', 1949, NULL);
+desc author
+select *from author
+
+CREATE TABLE book (
+    bookid NUMBER PRIMARY KEY,
+    authorid NUMBER,
+    title VARCHAR2(200),
+    publishyear NUMBER,
+    publishhouse VARCHAR2(100),
+    rating NUMBER(3,2)  -- Rating with 2 decimal places (e.g., 4.75)
+);
+
+
+INSERT INTO book (bookid, authorid, title, publishyear, publishhouse, rating)
+VALUES (1, 1, 'Romeo and Juliet', 1597, 'Penguin Books', 4.8);
+
+INSERT INTO book (bookid, authorid, title, publishyear, publishhouse, rating)
+VALUES (2, 2, 'Oliver Twist', 1837, 'Chapman & Hall', 4.5);
+
+INSERT INTO book (bookid, authorid, title, publishyear, publishhouse, rating)
+VALUES (3, 3, 'Pride and Prejudice', 1813, 'T. Egerton', 4.7);
+
+INSERT INTO book (bookid, authorid, title, publishyear, publishhouse, rating)
+VALUES (4, 4, 'Adventures of Huckleberry Finn', 1884, 'Charles L. Webster', 4.6);
+
+INSERT INTO book (bookid, authorid, title, publishyear, publishhouse, rating)
+VALUES (5, 5, 'Norwegian Wood', 1987, 'Kodansha', 4.2);
+
+select *from book
+
+CREATE TABLE adaptation (
+    bookid NUMBER,
+    type VARCHAR2(50),            -- Type of adaptation (e.g., Movie, TV Series)
+    title VARCHAR2(200),          -- Title of the adaptation
+    release_year NUMBER,         -- Year of release
+    rating NUMBER(3,2),          -- Rating of the adaptation (e.g., 4.5)
+    PRIMARY KEY (bookid, type)   -- Assuming a unique combination of book and adaptation type
+);
+
+INSERT INTO adaptation (bookid, type, title, release_year, rating)
+VALUES (1, 'Movie', 'Romeo + Juliet', 1996, 6.8);
+
+INSERT INTO adaptation (bookid, type, title, release_year, rating)
+VALUES (2, 'Movie', 'Oliver Twist', 2005, 6.9);
+
+INSERT INTO adaptation (bookid, type, title, release_year, rating)
+VALUES (3, 'TV Series', 'Pride and Prejudice', 1995, 8.3);
+
+INSERT INTO adaptation (bookid, type, title, release_year, rating)
+VALUES (4, 'Movie', 'The Adventures of Huck Finn', 1993, 7.0);
+
+INSERT INTO adaptation (bookid, type, title, release_year, rating)
+VALUES (5, 'Movie', 'Norwegian Wood', 2010, 6.7);
+
+select * from adaptation
+
+CREATE TABLE book_review (
+    bookid NUMBER,
+    author_review CLOB,  -- CLOB (Character Large Object) to store the review text
+    PRIMARY KEY (bookid)
+);
+
+INSERT INTO book_review (bookid, author_review)
+VALUES (1, 'A timeless tragedy of love and fate, beautifully written with profound characters.');
+
+INSERT INTO book_review (bookid, author_review)
+VALUES (2, 'An insightful commentary on social issues of the time, with rich character development.');
+
+INSERT INTO book_review (bookid, author_review)
+VALUES (3, 'A witty and romantic exploration of love, class, and relationships in early 19th century England.');
+
+INSERT INTO book_review (bookid, author_review)
+VALUES (4, 'A gripping adventure that delves into the complexities of freedom and human nature.');
+
+INSERT INTO book_review (bookid, author_review)
+VALUES (5, 'A poignant and reflective story of love, loss, and growing up in post-war Japan.');
+
+SELECT a.author_id, a.name AS author_name, b.bookid, b.title AS book_title
+FROM author a
+JOIN book b ON a.author_id = b.authorid
+ORDER BY a.name, b.title;
+
+SELECT a.author_id, a.name AS author_name, b.bookid, b.title AS book_title, b.publishyear
+FROM author a
+JOIN book b ON a.author_id = b.authorid
+WHERE b.publishyear > 2000
+ORDER BY a.name, b.publishyear;
+
+SELECT b.bookid, b.title AS book_title, b.publishyear AS book_publishyear, b.rating AS book_rating,
+       a.bookid, a.title AS adaptation_title, a.release_year, a.rating AS adaptation_rating
+FROM book b
+JOIN adaptation a ON b.bookid = a.bookid
+WHERE ABS(b.publishyear - a.release_year) <= 4
+  AND b.rating < a.rating
+ORDER BY b.title, a.release_year;
+
+
+SELECT b.bookid, b.title AS book_title, b.publishyear, b.rating AS book_rating,
+       a.bookid AS adaptation_bookid, a.title AS adaptation_title, a.release_year, a.rating AS adaptation_rating
+FROM book b
+LEFT JOIN adaptation a ON b.bookid = a.bookid
+ORDER BY b.title;
+
+
+SELECT b.bookid, b.title AS book_title, b.publishyear, b.rating AS book_rating,
+       a.bookid AS adaptation_bookid, a.title AS adaptation_title, a.release_year, a.rating AS adaptation_rating
+FROM book b
+LEFT JOIN adaptation a ON b.bookid = a.bookid
+WHERE a.type = 'Movie' OR a.type IS NULL
+ORDER BY b.title;
+
+
+SELECT b.bookid, b.title AS book_title, b.publishyear, b.rating AS book_rating,
+       a.author_id, a.name AS author_name, a.birth_year, a.death_year
+FROM book b
+JOIN author a ON b.authorid = a.author_id
+ORDER BY a.name, b.title;
+
+
+
+
+
+
+
+
+
+
+
+
