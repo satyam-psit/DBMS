@@ -86,6 +86,8 @@ FULL OUTER JOIN
 ON 
     tableA.pk = tableB.pk;
 
+ALTER table tableB rename column value1 to bvalue1;
+
 
 
 
