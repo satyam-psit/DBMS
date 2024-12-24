@@ -101,11 +101,10 @@ FROM author a
 JOIN book b ON a.author_id = b.authorid
 ORDER BY a.name, b.title;
 
-SELECT a.author_id, a.name AS author_name, b.bookid, b.title AS book_title, b.publishyear
+SELECT a.author_id, a.name AS author_name, b.title AS book_title, b.publishyear
 FROM author a
 JOIN book b ON a.author_id = b.authorid
-WHERE b.publishyear > 2000
-ORDER BY a.name, b.publishyear;
+WHERE b.publishyear > 1000
 
 SELECT b.bookid, b.title AS book_title, b.publishyear AS book_publishyear, b.rating AS book_rating,
        a.bookid, a.title AS adaptation_title, a.release_year, a.rating AS adaptation_rating
