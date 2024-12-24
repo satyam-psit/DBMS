@@ -106,13 +106,16 @@ FROM author a
 JOIN book b ON a.author_id = b.authorid
 WHERE b.publishyear > 1000
 
-SELECT b.bookid, b.title AS book_title, b.publishyear AS book_publishyear, b.rating AS book_rating,
+select book.title from book join adaptation on    --same as lower
+book.bookid =adaptation.bookid
+where adaptation.release_year - book.publishyear <= 100
+
+SELECT b.bookid, b.title AS book_title, b.publishyear AS book_publishyear, b.rating AS book_rating, --same as upper 
        a.bookid, a.title AS adaptation_title, a.release_year, a.rating AS adaptation_rating
 FROM book b
 JOIN adaptation a ON b.bookid = a.bookid
-WHERE ABS(b.publishyear - a.release_year) <= 4
+WHERE ABS(b.publishyear - a.release_year) <= 200
   AND b.rating < a.rating
-ORDER BY b.title, a.release_year;
 
 
 SELECT b.bookid, b.title AS book_title, b.publishyear, b.rating AS book_rating,
