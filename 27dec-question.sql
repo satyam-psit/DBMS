@@ -90,6 +90,23 @@ FROM orders
 GROUP BY customerid
 HAVING COUNT(orderid) > 1;
 
+SELECT DISTINCT customer.customername
+FROM customer
+JOIN orders ON customer.customerid2 = orders.customerid
+JOIN orderdetails ON orders.orderid = orderdetails.ordersid
+
+WHERE orderdetails.productid = 1;
+
+
+SELECT 
+    SUM(orders.amount) AS total_amount
+FROM 
+    orders
+JOIN 
+    orderdetails ON orders.orderid = orderdetails.ordersid
+WHERE 
+    orderdetails.productid = 2;
+
 
 
 
