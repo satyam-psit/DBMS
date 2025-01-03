@@ -156,6 +156,51 @@ FROM sales1 s
 JOIN product1 p ON s.productid = p.productid
 GROUP BY p.productname;
 
+-- Create the table
+CREATE TABLE regions (
+    regionid INT PRIMARY KEY,
+    regionname VARCHAR2(100)
+);
+
+INSERT INTO regions (regionid, regionname)
+VALUES (1, 'North');
+
+INSERT INTO regions (regionid, regionname)
+VALUES (2, 'south');
+
+CREATE TABLE customer2 (
+    customerid INT PRIMARY KEY,
+    customername VARCHAR2(100),
+    regionid INT
+);
+
+INSERT INTO customer2 (customerid, customername, regionid)
+VALUES (201, 'Alice', 1);
+
+INSERT INTO customer2 (customerid, customername, regionid)
+VALUES (202, 'Bob', 2);
+
+INSERT INTO customer2 (customerid, customername, regionid)
+VALUES (203, 'Charlie', 1);
+
+SELECT regionname, SUM(sales1.amount) AS totalsales
+FROM sales1
+JOIN 
+customer2 on sales1.customerid=customer2.customerid
+join
+regions on customer2.regionid=regions.regionid
+group by 
+regions.regionname;
+
+SELECT c.customername, sum(s.amount) as totalspent
+from sales1 s
+join customer2 c on s.customerid=c.customerid
+group by ccustomername
+having sum(s.amount)>500;
+
+
+
+
 
 
 
