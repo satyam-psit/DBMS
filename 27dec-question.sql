@@ -198,6 +198,28 @@ join customer2 c on s.customerid=c.customerid
 group by ccustomername
 having sum(s.amount)>500;
 
+select extract (month from saledate) as salemonth, sum(amount) as totalsales
+from sales1
+where extract (year from saledate) = 2023
+group by extract (month from saledate);
+
+CREATE table Hierarchy (
+    EmployeeID INT PRIMARY KEY,
+    ManagerID INT
+);
+
+INSERT INTO Hierarchy (EmployeeID, ManagerID) 
+VALUES (1, NULL);
+
+INSERT INTO Hierarchy (EmployeeID, ManagerID) 
+VALUES (2, 1);
+
+INSERT INTO Hierarchy (EmployeeID, ManagerID) 
+VALUES (3, 1);
+
+INSERT INTO Hierarchy (EmployeeID, ManagerID) 
+VALUES (4, 2);
+
 
 
 
