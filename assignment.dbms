@@ -1,0 +1,59 @@
+CREATE TABLE student4 (
+    s_id INT PRIMARY KEY,
+    name VARCHAR(50),
+    age INT,
+    grade CHAR(2)
+);
+INSERT INTO STUDENT4 (s_id, name, age, grade)
+VALUES (1, 'Alice', 20,'A');
+
+INSERT INTO STUDENT4 (s_id, name, age, grade)
+VALUES (2, 'Bob', 21, 'B');
+
+INSERT INTO STUDENT4 (s_id, name, age, grade)
+VALUES (3, 'Charlie', 19, 'A');
+
+select* from LEARNER
+
+ALTER TABLE STUDENT4
+ADD email VARCHAR(100);
+
+UPDATE STUDENT4
+SET email = 'alice@gmail.com'
+WHERE s_id = 1;
+
+UPDATE STUDENT4
+SET email = 'bob@gmail.com'
+WHERE s_id = 2;
+
+UPDATE STUDENT4
+SET email = 'charlie@gmail.com'
+WHERE s_id = 3;
+
+ALTER TABLE STUDENT4
+MODIFY grade CHAR(3);
+
+UPDATE STUDENT4
+SET grade = 'A+'
+WHERE s_id = 1;
+
+
+Alter TABLE STUDENT4 rename TO LEARNER;
+
+ALTER TABLE LEARNER
+DROP COLUMN email;
+
+TRUNCATE TABLE LEARNER;
+
+DROP TABLE LEARNER;
+
+
+
+
+
+
+
+
+
+
+
