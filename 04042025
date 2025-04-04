@@ -1,0 +1,61 @@
+CREATE TABLE sales4 (
+    sales_no INT PRIMARY KEY,
+    salesname VARCHAR(100),
+    branch VARCHAR(100),
+    salesamount DECIMAL(10, 2),
+    DOB DATE
+);
+
+INSERT INTO sales4 (sales_no, salesname, branch, salesamount, DOB)
+VALUES (1, 'Anita Sharma', 'Delhi', 50000.00, TO_DATE('14-05-1990', 'DD-MM-YYYY'));
+
+INSERT INTO sales4 (sales_no, salesname, branch, salesamount, DOB)
+VALUES (2, 'Ravi Kumar', 'Mumbai', 75000.50, TO_DATE('23-11-1988', 'DD-MM-YYYY'));
+
+INSERT INTO sales4 (sales_no, salesname, branch, salesamount, DOB)
+VALUES (3, 'Neha Singh', 'Bangalore', 62000.00, TO_DATE('08-07-1992', 'DD-MM-YYYY'));
+
+INSERT INTO sales4 (sales_no, salesname, branch, salesamount, DOB)
+VALUES (4, 'Amit Patel', 'Chennai', 58000.75, TO_DATE('15-03-1991', 'DD-MM-YYYY'));
+
+INSERT INTO sales4 (sales_no, salesname, branch, salesamount, DOB)
+VALUES (5, 'Priya Verma', 'Kolkata', 67000.25, TO_DATE('30-12-1989', 'DD-MM-YYYY'));
+
+ALTER TABLE sales4
+MODIFY salesamount FLOAT(126);
+
+select* from sales4
+
+SELECT branch, SUM(salesamount) AS total_sales
+FROM sales4
+GROUP BY branch;
+
+SELECT branch, AVG(salesamount) AS average_sales
+FROM sales4
+GROUP BY branch;
+
+SELECT *
+FROM sales4
+WHERE salesamount = (
+    SELECT MAX(salesamount)
+    FROM sales4
+);
+
+SELECT salesname
+FROM sales4
+ORDER BY salesname ASC;
+
+SELECT salesname, DOB
+FROM sales4
+ORDER BY salesname ASC;
+
+
+
+
+
+
+
+
+
+
+
