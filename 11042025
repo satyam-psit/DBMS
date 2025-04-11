@@ -1,0 +1,69 @@
+CREATE TABLE department4 (
+    depno NUMBER PRIMARY KEY,
+    dname VARCHAR2(50),
+    loc   VARCHAR2(50)
+);
+
+INSERT INTO department4 (depno, dname, loc) VALUES (10, 'Accounting', 'New York');
+INSERT INTO department4 (depno, dname, loc) VALUES (20, 'Research', 'Dallas');
+INSERT INTO department4 (depno, dname, loc) VALUES (30, 'Sales', 'Chicago');
+INSERT INTO department4 (depno, dname, loc) VALUES (40, 'Operations', 'Boston');
+INSERT INTO department4 (depno, dname, loc) VALUES (50, 'HR', 'Los Angeles');
+INSERT INTO department4 (depno, dname, loc) VALUES (60, 'IT', 'San Francisco');
+INSERT INTO department4 (depno, dname, loc) VALUES (70, 'Marketing', 'Seattle');
+INSERT INTO department4 (depno, dname, loc) VALUES (80, 'Finance', 'Houston');
+INSERT INTO department4 (depno, dname, loc) VALUES (90, 'Legal', 'Miami');
+INSERT INTO department4 (depno, dname, loc) VALUES (100, 'Logistics', 'Atlanta');
+
+CREATE TABLE employee6 (
+    empno      NUMBER PRIMARY KEY,
+    empname    VARCHAR2(50),
+    job        VARCHAR2(50),
+    manager    NUMBER,
+    hiredate   DATE,
+    salary     NUMBER(10,2),
+    commision  NUMBER(10,2),
+    depno      NUMBER,
+    CONSTRAINT fk_depno FOREIGN KEY (depno) REFERENCES department4(depno)
+);
+
+INSERT INTO employee6 (empno, empname, job, manager, hiredate, salary, commision, depno)
+VALUES (101, 'John Smith', 'Manager', NULL, TO_DATE('2020-01-15', 'YYYY-MM-DD'), 8000, NULL, 10);
+INSERT INTO employee6 (empno, empname, job, manager, hiredate, salary, commision, depno)
+VALUES (102, 'Sara Khan', 'Analyst', 101, TO_DATE('2021-03-10', 'YYYY-MM-DD'), 6000, NULL, 20);
+INSERT INTO employee6 (empno, empname, job, manager, hiredate, salary, commision, depno)
+VALUES (103, 'Mike Chen', 'Clerk', 102, TO_DATE('2022-07-01', 'YYYY-MM-DD'), 3000, NULL, 20);
+INSERT INTO employee6 (empno, empname, job, manager, hiredate, salary, commision, depno)
+VALUES (104, 'Priya Mehta', 'Salesman', 101, TO_DATE('2019-11-20', 'YYYY-MM-DD'), 4000, 500, 30);
+INSERT INTO employee6 (empno, empname, job, manager, hiredate, salary, commision, depno)
+VALUES (105, 'David Lee', 'Clerk', 101, TO_DATE('2023-01-10', 'YYYY-MM-DD'), 2800, NULL, 10);
+
+INSERT INTO employee6 (empno, empname, job, manager, hiredate, salary, commision, depno)
+VALUES (106, 'Anita Roy', 'Manager', NULL, TO_DATE('2018-06-05', 'YYYY-MM-DD'), 8500, NULL, 40);
+INSERT INTO employee6 (empno, empname, job, manager, hiredate, salary, commision, depno)
+VALUES (107, 'Carlos Diaz', 'Salesman', 104, TO_DATE('2021-12-12', 'YYYY-MM-DD'), 4200, 300, 30);
+INSERT INTO employee6 (empno, empname, job, manager, hiredate, salary, commision, depno)
+VALUES (108, 'Meena Singh', 'Analyst', 106, TO_DATE('2020-09-23', 'YYYY-MM-DD'), 6100, NULL, 40);
+INSERT INTO employee6 (empno, empname, job, manager, hiredate, salary, commision, depno)
+VALUES (109, 'Tom Becker', 'Clerk', 108, TO_DATE('2022-02-17', 'YYYY-MM-DD'), 2900, NULL, 40);
+INSERT INTO employee6 (empno, empname, job, manager, hiredate, salary, commision, depno)
+VALUES (110, 'Lara Croft', 'HR Executive', 101, TO_DATE('2020-10-30', 'YYYY-MM-DD'), 5000, NULL, 50);
+
+UPDATE employee6
+SET salary = salary * 1.15
+WHERE MONTHS_BETWEEN(SYSDATE, hiredate) / 12 > 5;
+
+SELECT *
+FROM (
+    SELECT manager, COUNT(*) AS num_of_employees
+    FROM employee6
+    WHERE manager IS NOT NULL
+    GROUP BY manager
+    ORDER BY num_of_employees DESC
+)
+WHERE ROWNUM = 1;
+
+
+select * from department4
+select * from employee6
+
